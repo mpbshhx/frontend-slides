@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q4 2025 Technology Committee Update</title>
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap">
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME)
+           =========================================== */
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #1a1f35;
+            --bg-card: rgba(30, 35, 55, 0.6);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #60a5fa;
+            --accent-blue-light: #3b82f6;
+            --accent-glow: rgba(96, 165, 250, 0.1);
+            
+            --font-display: 'Cabinet Grotesk', sans-serif;
+            --font-body: 'Satoshi', sans-serif;
+            
+            --slide-padding: clamp(2rem, 5vw, 4rem);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-normal: 0.6s;
+        }
+
+        /* ===========================================
+           BASE STYLES
+           =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Subtle grid pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===========================================
+           SLIDE CONTAINER
+           =========================================== */
+        .slide {
+            min-height: 100vh;
+            padding: var(--slide-padding);
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+        .slide-number {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .category {
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 700px;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .emphasis {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* ===========================================
+           LAYOUT COMPONENTS
+           =========================================== */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s var(--ease-out-expo), 
+                        border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-blue);
+        }
+
+        .card h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .accent-line {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-light));
+            margin: 2rem 0;
+        }
+
+        ul {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent-blue);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .quote-author {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: normal;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* ===========================================
+           TITLE SLIDE
+           =========================================== */
+        .title-slide {
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .title-slide h1 {
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .title-slide .copyright {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ===========================================
+           PROGRESS BAR
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-light));
+            transform-origin: left;
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        /* ===========================================
+           NAVIGATION DOTS
+           =========================================== */
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .nav-dot:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.2);
+        }
+
+        .nav-dot.active {
+            background: var(--accent-blue);
+            transform: scale(1.5);
+        }
+
+        /* ===========================================
+           ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.1s; }
+        .reveal:nth-child(2) { transition-delay: 0.2s; }
+        .reveal:nth-child(3) { transition-delay: 0.3s; }
+        .reveal:nth-child(4) { transition-delay: 0.4s; }
+        .reveal:nth-child(5) { transition-delay: 0.5s; }
+        .reveal:nth-child(6) { transition-delay: 0.6s; }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-width: 768px) {
+            .nav-dots {
+                display: none;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===========================================
+           PRINT STYLES
+           =========================================== */
+        @media print {
+            .slide {
+                page-break-after: always;
+                min-height: auto;
+            }
+            
+            .progress-bar,
+            .nav-dots,
+            .slide-number {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress bar -->
+    <div class="progress-bar"></div>
+
+    <!-- Navigation dots -->
+    <nav class="nav-dots" aria-label="Slide navigation"></nav>
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+        <div class="category reveal">Technology Committee</div>
+        <h1 class="reveal">Q4 2025<br>Tech Update</h1>
+        <div class="subtitle reveal">December 2025</div>
+        <div class="accent-line reveal"></div>
+        <div class="copyright">Copyright ©2025 Howard Hughes Holdings Inc.</div>
+    </section>
+
+    <!-- Slide 2: HHX Mission Refresher -->
+    <section class="slide">
+        <div class="category reveal">HHX Mission Refresher</div>
+        <h2 class="reveal">The Innovation Hub at Howard Hughes</h2>
+        <p class="reveal emphasis">Our efforts are aligned to achieve three strategic business goals:</p>
+        
+        <div class="content-grid reveal">
+            <div class="card">
+                <h3>Cutting Overhead</h3>
+                <p>Implementing tools that make us faster, more self-sufficient, and accurate—reducing clerical work, manual processes, and administrative costs over time.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Supporting Revenue</h3>
+                <p>Beginning with leasing, we are using AI and emerging technology to shorten negotiation-to-execution timelines and accelerate cash collection.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Training Our Workforce</h3>
+                <p>We are creating a culture of curiosity and AI literacy—empowering our teams to unlock improvements in every corner of the business on their own.</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">2</div>
+    </section>
+
+    <!-- Slide 3: 2025 In Review -->
+    <section class="slide">
+        <div class="category reveal">2025 In Review</div>
+        <h2 class="reveal">The Innovation Hub at Howard Hughes</h2>
+        
+        <p class="reveal emphasis">This year HHX shifted from experimentation to execution at scale. We moved AI from concept to habit, innovation became an organization-wide capability, and we grew our partner ecosystem.</p>
+        
+        <div class="content-grid reveal">
+            <div class="card">
+                <h3>Finalized AdaOS 1.0</h3>
+                <p>Built the foundation for our automated back-office</p>
+                <div class="accent-line" style="width: 40px; margin-top: 1rem;"></div>
+                <p style="font-size: 0.875rem; margin-top: 1rem;">Automated lease drafting and abstraction set to go live in Q1 2026 positions HHC for an estimated $1M+ cost reduction, 2,000+ labor hours avoided, and 99% faster processing.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Company-Wide AI</h3>
+                <p>We embedded AI into the daily rhythm of work</p>
+                <div class="accent-line" style="width: 40px; margin-top: 1rem;"></div>
+                <p style="font-size: 0.875rem; margin-top: 1rem;">Rolled out Glean to the entire company, drove AI adoption to 54%+ with 47,500+ searches/chats. Supported creation of high-value AI agents in Legal, Internal Audit, and Accounting.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Reskilled Workforce</h3>
+                <p>Delivered robust training and change management</p>
+                <div class="accent-line" style="width: 40px; margin-top: 1rem;"></div>
+                <p style="font-size: 0.875rem; margin-top: 1rem;">Company-wide AI training grew to 60%+ participation, with 4,000+ training videos and 600+ courses completed, reinforced by our Innovation Leads program.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Holistic Innovation</h3>
+                <p>Not everything we do is about AI</p>
+                <div class="accent-line" style="width: 40px; margin-top: 1rem;"></div>
+                <p style="font-size: 0.875rem; margin-top: 1rem;">Our AV&C joint venture is positioned for revenue. The JV initially secured our Digital Sales Gallery IP. Now we have expanded the platform into new business lines.</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">3</div>
+    </section>
+
+    <!-- Slide 4: Q4 2025 Highlights -->
+    <section class="slide">
+        <div class="category reveal">Signals of Transformation</div>
+        <h2 class="reveal">Q4 2025 Highlights</h2>
+        
+        <p class="reveal emphasis">This quarter was all about building habits – training and reskilling, advancing AI adoption, and preparing HHX for scale.</p>
+        
+        <div class="highlight-box reveal">
+            <p><strong>Some highlights from this quarter include:</strong></p>
+            <ul style="margin-top: 1rem;">
+                <li>Expanded AI fluency across the company – 60%+ of the company active in AI Academy, completing 600+ courses and logging 4000+ videos of training.</li>
+                <li>Embedded AI into daily workflows – AI adoption (Glean) is now over 54% of the company monthly, 36% weekly, and 16% daily.</li>
+                <li>Hosted our second annual Innovation Summit – Over 80 people joined us in The Woodlands, with representation from every region and function.</li>
+                <li>Advanced core initiatives – Continued steady progress on foundational projects like AdaOS and the Financial Command Center (FinCommand).</li>
+            </ul>
+        </div>
+        
+        <div class="slide-number">4</div>
+    </section>
+
+    <!-- Slide 5: Maturing HHX -->
+    <section class="slide">
+        <div class="category reveal">On The Horizon for 1H 2026</div>
+        <h2 class="reveal">Maturing HHX</h2>
+        
+        <p class="reveal emphasis">We are maturing our innovation platform to meet the evolving needs of HHH.</p>
+        
+        <div class="highlight-box reveal" style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%);">
+            <p><strong>For Discussion:</strong> How should we balance breadth versus depth in our innovation agenda—prioritizing functional diversity across the business versus doubling down on high-impact verticals?</p>
+        </div>
+        
+        <h3 class="reveal">Where We Are Headed</h3>
+        <ul class="reveal">
+            <li><strong>Expanding to new domains</strong> – Unlocking value in areas like procurement, financial reporting, and due diligence.</li>
+            <li><strong>Building enterprise innovation muscle</strong> – Investing deeper in training, reskilling, Innovation Leads, and other programs designed to embed and incentivize innovation behavior across the organization.</li>
+            <li><strong>Creating value from intellectual property</strong> – monetizing our efforts through design partnerships, warrants, revenue-shares, and co-development arrangements.</li>
+        </ul>
+        
+        <div class="slide-number">5</div>
+    </section>
+
+    <!-- Slide 6: Resourcing and Operating Model -->
+    <section class="slide">
+        <div class="category reveal">Modular Team Structure</div>
+        <h2 class="reveal">Resourcing and Operating Model</h2>
+        
+        <p class="reveal emphasis">We are fine-tuning a flexible operating model to scale fast without inflating fixed costs.</p>
+        
+        <div class="highlight-box reveal" style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%);">
+            <p><strong>For Discussion:</strong> What balance should we strike between core team growth and flexible capacity as demand for innovation grows across the HHH portfolio?</p>
+        </div>
+        
+        <h3 class="reveal">Key Features:</h3>
+        <ul class="reveal">
+            <li><strong>Blending full-time equivalents, flexible contractors, and strategic partners</strong> to match demand and speed without expanding fixed-cost base.</li>
+            <li><strong>Expanding bandwidth in key skillsets</strong> – product and program management, process redesign/integrations, data science, software/AI engineering, and change management.</li>
+            <li><strong>Maintaining discipline</strong> through strong governance and tight cross-functional collaboration that safeguards quality, security, and delivery as demand increases.</li>
+        </ul>
+        
+        <div class="slide-number">6</div>
+    </section>
+
+    <!-- Slide 7: Workforce AI Adoption -->
+    <section class="slide">
+        <div class="category reveal">AI Efficiency Gains</div>
+        <h2 class="reveal">Workforce AI Adoption</h2>
+        <h3 class="reveal" style="color: var(--text-secondary); font-size: 1.5rem; margin-bottom: 2rem;">Embedding AI in Everyday Work</h3>
+        
+        <p class="reveal emphasis">AI adoption is translating into measurable gains in productivity, collaboration, and how people get work done across the company.</p>
+        
+        <div class="stats-grid reveal">
+            <div class="stat">
+                <div class="stat-number">86%</div>
+                <div class="stat-label">Using AI Weekly</div>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem; color: var(--text-muted);">Up from 49% in June</p>
+            </div>
+            <div class="stat">
+                <div class="stat-number">83%</div>
+                <div class="stat-label">Would Miss AI Tools</div>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem; color: var(--text-muted);">Up from 69% in June</p>
+            </div>
+            <div class="stat">
+                <div class="stat-number">70%</div>
+                <div class="stat-label">Active in Glean</div>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem; color: var(--text-muted);">Strong awareness and adoption</p>
+            </div>
+            <div class="stat">
+                <div class="stat-number">91%</div>
+                <div class="stat-label">Saving 1-5+ Hours Weekly</div>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem; color: var(--text-muted);">16% saving 4-12+ hours</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box reveal" style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%); margin-top: 2rem;">
+            <p><strong>For Discussion:</strong> How do we best identify and reward people who deliver measurable AI value, balancing recognition, incentives, and accountability?</p>
+        </div>
+        
+        <div class="slide-number">7</div>
+    </section>
+
+    <!-- Slide 8: Workforce Training -->
+    <section class="slide">
+        <div class="category reveal">Feedback From The Company</div>
+        <h2 class="reveal">Workforce Training</h2>
+        <h3 class="reveal" style="color: var(--text-secondary); font-size: 1.5rem; margin-bottom: 2rem;">Becoming an AI-Proficient Organization</h3>
+        
+        <p class="reveal emphasis">Strong engagement in training and education validates our approach.</p>
+        
+        <div class="highlight-box reveal">
+            <p><strong>Moving From Awareness to Habit-Building</strong></p>
+            <p style="margin-top: 1rem;">Our focus is shifting from AI literacy and exposure to tools to driving behavior change and consistent habits that improve the quality of day-to-day work and drive measurable value. Tactics include:</p>
+            <ul style="margin-top: 1rem;">
+                <li>Role and function-based skills sessions</li>
+                <li>Hackathon labs and use case spotlights</li>
+                <li>Incentives for knowledge sharing and creation of agents and automations</li>
+            </ul>
+        </div>
+        
+        <div class="reveal" style="margin-top: 2rem;">
+            <h3>Activating the Q3 2025 Workforce Study</h3>
+            <p>In partnership with the new head of HR, we will be launching a segmentation and upskilling strategy in 2026 to provide training pathways by role, readiness, and opportunity.</p>
+        </div>
+        
+        <div class="quote reveal">
+            "The HHX team is a great partner and sharer of information and new resources. Just keep doing what you're doing!"
+            <span class="quote-author">— David Zolno, Legal</span>
+        </div>
+        
+        <div class="quote reveal">
+            "The company wide roll out and integration with accessible classes and live meetings has been awesome."
+            <span class="quote-author">— Kyle Michibata, Leasing</span>
+        </div>
+        
+        <div class="highlight-box reveal" style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%); margin-top: 2rem;">
+            <p><strong>For Discussion:</strong> How should we evolve our AI training, so it stays relevant and engaging at scale and never feels repetitive or stale?</p>
+        </div>
+        
+        <div class="slide-number">8</div>
+    </section>
+
+    <!-- Slide 9: Innovation Summit -->
+    <section class="slide">
+        <div class="category reveal">2025 HHX Innovation Summit</div>
+        <h2 class="reveal">Inspiring Innovation</h2>
+        
+        <p class="reveal emphasis">The Innovation Summit is our annual flagship event to align teams, accelerate execution, and spark new ideas—reaching employees via in-person sessions and company-wide livestream.</p>
+        
+        <div class="stats-grid reveal">
+            <div class="stat">
+                <div class="stat-number">80+</div>
+                <div class="stat-label">Attendees</div>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem; color: var(--text-muted);">All regions and functions</p>
+            </div>
+            <div class="stat">
+                <div class="stat-number">66%</div>
+                <div class="stat-label">First-Timers</div>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem; color: var(--text-muted);">34% returning from last year</p>
+            </div>
+            <div class="stat">
+                <div class="stat-number">1.5</div>
+                <div class="stat-label">Days</div>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem; color: var(--text-muted);">Packed with breakthrough ideas</p>
+            </div>
+        </div>
+        
+        <h3 class="reveal" style="margin-top: 2rem;">Key Takeaways</h3>
+        <ul class="reveal">
+            <li>Keynote from Dror Poleg crystallized the "why now," connecting AI, real estate, and placemaking to HHC's strategy.</li>
+            <li>Enterprise AI enablement is taking root, with employee-built agents and Glean use cases starting to scale across teams.</li>
+            <li>AdaOS demos showcased real ROI potential—moving from conceptual to automation across leasing processing.</li>
+            <li>ProptechOS revealed the future of building operations, with digital twins and the ability to chat with building data via AI agents.</li>
+        </ul>
+        
+        <div class="highlight-box reveal" style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%); margin-top: 2rem;">
+            <p><strong>For Discussion:</strong> How do we translate the Summit's ideas and inspiration into year-long action and continuous momentum?</p>
+        </div>
+        
+        <div class="slide-number">9</div>
+    </section>
+
+    <script>
+        /* ===========================================
+           SLIDE PRESENTATION CONTROLLER
+           =========================================== */
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.progressBar = document.querySelector('.progress-bar');
+                this.navDots = document.querySelector('.nav-dots');
+                
+                this.init();
+            }
+
+            init() {
+                // Create navigation dots
+                this.createNavDots();
+                
+                // Set up intersection observer for animations
+                this.setupIntersectionObserver();
+                
+                // Set up event listeners
+                this.setupEventListeners();
+                
+                // Initialize first slide
+                this.updateSlide(0);
+            }
+
+            createNavDots() {
+                this.slides.forEach((slide, index) => {
+                    const dot = document.createElement('button');
+                    dot.classList.add('nav-dot');
+                    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                    dot.addEventListener('click', () => this.goToSlide(index));
+                    this.navDots.appendChild(dot);
+                });
+            }
+
+            setupIntersectionObserver() {
+                const options = {
+                    threshold: 0.5,
+                    rootMargin: '0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            
+                            // Update current slide index
+                            const slideIndex = Array.from(this.slides).indexOf(entry.target);
+                            this.currentSlide = slideIndex;
+                            this.updateProgress();
+                            this.updateNavDots();
+                        }
+                    });
+                }, options);
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            setupEventListeners() {
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+                        e.preventDefault();
+                        this.nextSlide();
+                    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        this.prevSlide();
+                    } else if (e.key === 'Home') {
+                        e.preventDefault();
+                        this.goToSlide(0);
+                    } else if (e.key === 'End') {
+                        e.preventDefault();
+                        this.goToSlide(this.slides.length - 1);
+                    }
+                });
+
+                // Mouse wheel navigation (throttled)
+                let wheelTimeout;
+                window.addEventListener('wheel', (e) => {
+                    if (!wheelTimeout) {
+                        wheelTimeout = setTimeout(() => {
+                            wheelTimeout = null;
+                        }, 1000);
+
+                        if (e.deltaY > 0) {
+                            this.nextSlide();
+                        } else if (e.deltaY < 0) {
+                            this.prevSlide();
+                        }
+                    }
+                }, { passive: true });
+
+                // Touch swipe navigation
+                let touchStartY = 0;
+                let touchEndY = 0;
+
+                document.addEventListener('touchstart', (e) => {
+                    touchStartY = e.changedTouches[0].screenY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    touchEndY = e.changedTouches[0].screenY;
+                    this.handleSwipe();
+                });
+
+                const handleSwipe = () => {
+                    if (touchStartY - touchEndY > 50) {
+                        this.nextSlide();
+                    } else if (touchEndY - touchStartY > 50) {
+                        this.prevSlide();
+                    }
+                };
+
+                this.handleSwipe = handleSwipe;
+            }
+
+            nextSlide() {
+                if (this.currentSlide < this.slides.length - 1) {
+                    this.goToSlide(this.currentSlide + 1);
+                }
+            }
+
+            prevSlide() {
+                if (this.currentSlide > 0) {
+                    this.goToSlide(this.currentSlide - 1);
+                }
+            }
+
+            goToSlide(index) {
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+            }
+
+            updateSlide(index) {
+                this.currentSlide = index;
+                this.updateProgress();
+                this.updateNavDots();
+            }
+
+            updateProgress() {
+                const progress = (this.currentSlide / (this.slides.length - 1)) * 100;
+                this.progressBar.style.transform = `scaleX(${progress / 100})`;
+            }
+
+            updateNavDots() {
+                const dots = this.navDots.querySelectorAll('.nav-dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === this.currentSlide);
+                });
+            }
+        }
+
+        // Initialize presentation
+        new SlidePresentation();
+    </script>
+</body>
+</html>

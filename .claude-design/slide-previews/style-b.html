@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style B: Swiss Modern</title>
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=supreme@800,500&f[]=general-sans@500,400&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'General Sans', sans-serif;
+            background: #f8f9fa;
+            color: #111827;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Geometric accent */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(180deg, #111827 0%, #1f2937 100%);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        
+        .slide {
+            max-width: 1200px;
+            padding: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .number {
+            font-family: 'Supreme', sans-serif;
+            font-size: 8rem;
+            font-weight: 800;
+            color: #e5e7eb;
+            line-height: 1;
+            margin-bottom: -1rem;
+            opacity: 0;
+            animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+        }
+        
+        h1 {
+            font-family: 'Supreme', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: #111827;
+            opacity: 0;
+            animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 6px;
+            background: #111827;
+            margin: 2rem 0;
+            opacity: 0;
+            animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+        }
+        
+        .subtitle {
+            font-size: 1.125rem;
+            color: #4b5563;
+            font-weight: 500;
+            max-width: 500px;
+            letter-spacing: -0.01em;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.8s forwards;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="number">04</div>
+        <h1>Technology<br>Committee<br>Update</h1>
+        <div class="divider"></div>
+        <div class="subtitle">Clean. Geometric. Bauhaus-inspired precision.</div>
+    </div>
+</body>
+</html>
